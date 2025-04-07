@@ -28,19 +28,20 @@ body {
     --darkColor: #191f28;
     --fontColor: #7f7f7f;
     --fontColorLight: #a4a9b9;
+    --colorAccent: #44b0cd;
 }
 
 h1 {
     font-size: 3rem;
     color: var(--darkColor);
     margin-bottom: 10px;
-    text-align: center; /* Titolo centrato */
+    text-align: center;
 }
 
 .date-time {
     font-size: 1.5rem;
     color: var(--fontColorLight);
-    text-align: center; /* Data centrata */
+    text-align: center;
     margin-top: 5px;
 }
 
@@ -59,11 +60,11 @@ button#addTaskBtn {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    display: inline-block;  /* Garantisce che il pulsante si comporti come un elemento inline */
+    display: inline-block;
 }
 
 button#addTaskBtn:hover {
-    background-color: var(--colorMainLighter10);
+    background-color: var(--colorMain2);
 }
 
 /* Modale per aggiungere attività */
@@ -136,22 +137,25 @@ button#addTaskBtn:hover {
     gap: 10px;
 }
 
-/* Task Card */
+/* Task Card Stile ispirato */
 .task-card {
-    background-color: var(--greyColor);
+    background-color: var(--colorMain);
     padding: 15px;
     border-radius: 10px;
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .task-card:hover {
-    background-color: var(--greyColorDarken1);
+    transform: scale(1.05);
 }
 
 .task-card.to-do {
-    background-color: var(--greyColor);
+    background-color: #f4f4f5;
 }
 
 .task-card.in-progress {
@@ -168,6 +172,19 @@ button#addTaskBtn:hover {
 
 .task-card.completed {
     background-color: var(--colorMain2);
+}
+
+.task-card p {
+    color: white;
+    font-weight: 500;
+}
+
+/* Aggiungi Check Icon */
+.task-card .check-icon {
+    color: #fff;
+    font-size: 1.5rem;
+    display: inline-block;
+    transition: color 0.3s ease;
 }
 
 /* Responsività per dispositivi mobili */
