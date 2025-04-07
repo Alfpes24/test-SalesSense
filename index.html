@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Kanban</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Dashboard Kanban</h1>
+            <div class="date-time">
+                <p>Oggi è <span id="date"></span></p>
+            </div>
+        </header>
+
+        <div class="add-task">
+            <!-- Pulsante per aggiungere attività -->
+            <button id="addTaskBtn">Aggiungi Attività</button>
+        </div>
+
+        <div class="kanban-board">
+            <!-- Colonna 'Da fare' -->
+            <div class="kanban-column" id="to-do">
+                <h2>Da fare</h2>
+                <div class="task-container"></div>
+            </div>
+
+            <!-- Colonna 'In corso' -->
+            <div class="kanban-column" id="in-progress">
+                <h2>In corso</h2>
+                <div class="task-container"></div>
+            </div>
+
+            <!-- Colonna 'In attesa' -->
+            <div class="kanban-column" id="waiting">
+                <h2>In attesa</h2>
+                <div class="task-container"></div>
+            </div>
+
+            <!-- Colonna 'Da seguire' -->
+            <div class="kanban-column" id="follow-up">
+                <h2>Da seguire</h2>
+                <div class="task-container"></div>
+            </div>
+
+            <!-- Colonna 'Completato' -->
+            <div class="kanban-column" id="completed">
+                <h2>Completato</h2>
+                <div class="task-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
