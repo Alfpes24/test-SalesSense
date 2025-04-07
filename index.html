@@ -9,19 +9,63 @@
 </head>
 
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header>
-            <h1>Dashboard Kanban</h1>
-            <p>Oggi è <span id="date"></span></p>
+    <div class="root">
+        <!-- Header Section -->
+        <header class="header">
+            <div class="header-text">
+                <h1>Compare and shop the Top10 best services & products for you</h1>
+            </div>
         </header>
 
-        <!-- Pulsante per aggiungere attività -->
-        <div class="add-task">
-            <button id="addTaskBtn">Aggiungi Attività</button>
+        <!-- Categories Section -->
+        <div class="categories">
+            <div class="category">
+                <img src="https://example.com/icons/lifestyle.png" alt="Lifestyle Icon">
+                <span>Lifestyle</span>
+            </div>
+            <div class="category">
+                <img src="https://example.com/icons/health.png" alt="Health & Wellness Icon">
+                <span>Health & Wellness</span>
+            </div>
+            <div class="category">
+                <img src="https://example.com/icons/home.png" alt="Home Icon">
+                <span>Home</span>
+            </div>
+            <div class="category">
+                <img src="https://example.com/icons/business.png" alt="Business Icon">
+                <span>Business</span>
+            </div>
+            <div class="category">
+                <img src="https://example.com/icons/security.png" alt="Security Icon">
+                <span>Security</span>
+            </div>
         </div>
 
-        <!-- Modale per aggiungere attività -->
+        <!-- Kanban Board -->
+        <div class="kanban-board">
+            <div class="kanban-column" id="to-do">
+                <h2>Da fare</h2>
+                <div class="task-container"></div>
+            </div>
+            <div class="kanban-column" id="in-progress">
+                <h2>In corso</h2>
+                <div class="task-container"></div>
+            </div>
+            <div class="kanban-column" id="waiting">
+                <h2>In attesa</h2>
+                <div class="task-container"></div>
+            </div>
+            <div class="kanban-column" id="follow-up">
+                <h2>Da seguire</h2>
+                <div class="task-container"></div>
+            </div>
+            <div class="kanban-column" id="completed">
+                <h2>Completato</h2>
+                <div class="task-container"></div>
+            </div>
+        </div>
+
+        <!-- Modale per Aggiungere Attività -->
         <div id="taskModal" class="modal">
             <div class="modal-content">
                 <span class="close-btn" id="closeBtn">&times;</span>
@@ -66,39 +110,6 @@
                     </div>
                     <button type="submit">Aggiungi</button>
                 </form>
-            </div>
-        </div>
-
-        <!-- Sezione Kanban -->
-        <div class="kanban-board">
-            <!-- Colonna 'Da fare' -->
-            <div class="kanban-column" id="to-do">
-                <h2>Da fare</h2>
-                <div class="task-container"></div>
-            </div>
-
-            <!-- Colonna 'In corso' -->
-            <div class="kanban-column" id="in-progress">
-                <h2>In corso</h2>
-                <div class="task-container"></div>
-            </div>
-
-            <!-- Colonna 'In attesa' -->
-            <div class="kanban-column" id="waiting">
-                <h2>In attesa</h2>
-                <div class="task-container"></div>
-            </div>
-
-            <!-- Colonna 'Da seguire' -->
-            <div class="kanban-column" id="follow-up">
-                <h2>Da seguire</h2>
-                <div class="task-container"></div>
-            </div>
-
-            <!-- Colonna 'Completato' -->
-            <div class="kanban-column" id="completed">
-                <h2>Completato</h2>
-                <div class="task-container"></div>
             </div>
         </div>
     </div>
