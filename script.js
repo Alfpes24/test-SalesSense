@@ -24,10 +24,7 @@ function closeModal() {
 }
 
 // Funzione per aggiungere una nuova attività
-function addTask(title, description, deadline, priority) {
-    console.log("Funzione addTask chiamata");
-    console.log("Dati ricevuti:", title, description, deadline, priority);
-
+function addTask(title, description, deadline, priority, status) {
     if (!title || !description || !deadline || !priority) {
         alert("Per favore, compila tutti i campi.");
         return;
@@ -38,7 +35,7 @@ function addTask(title, description, deadline, priority) {
         description: description,
         deadline: deadline,
         priority: priority,
-        status: 'to-do'  // Impostiamo lo stato di default come "Da fare"
+        status: status
     };
 
     renderTask(task);  // Passa l'attività alla funzione renderTask
@@ -47,11 +44,9 @@ function addTask(title, description, deadline, priority) {
 
 // Funzione per visualizzare l'attività nella colonna corretta
 function renderTask(task) {
-    console.log("Rendering activity:", task);
-
     const taskCard = document.createElement('div');
     taskCard.classList.add('task-card', task.status);  // Imposta la classe con il colore
-    taskCard.setAttribute('draggable', 'true');  // Imposta l'attività come trascinabile
+    taskCard.setAttribute('draggable', 'true');
     taskCard.innerHTML = `
         <p><strong>${task.title}</strong></p>
         <p>Descrizione: ${task.description}</p>
@@ -70,46 +65,29 @@ function renderTask(task) {
         <button class="delete-btn">Cancella</button>
     `;
 
-    // Gestisce il cambiamento dello stato tramite il menu a tendina
     taskCard.querySelector('.status-select').addEventListener('change', (e) => {
         const newStatus = e.target.value;
         updateTaskStatus(taskCard, newStatus);
     });
 
-    // Gestisce la cancellazione della task
     taskCard.querySelector('.delete-btn').addEventListener('click', () => deleteTask(taskCard));
 
-    // Seleziona la colonna in base allo stato e aggiungi la card
     const column = document.getElementById(task.status);
     if (column) {
         column.querySelector('.task-container').appendChild(taskCard);
-    } else {
-        console.log("Colonna non trovata:", task.status);
     }
 }
 
 // Funzione per aggiornare lo stato dell'attività
 function updateTaskStatus(taskCard, newStatus) {
-    // Rimuove tutte le classi di stato precedenti
     taskCard.classList.remove('to-do', 'in-progress', 'waiting', 'follow-up', 'completed');
-    
-    // Aggiungi la classe corrispondente al nuovo stato
     taskCard.classList.add(newStatus);
-
-    // Aggiorna lo stato dell'attività nel DOM
     taskCard.querySelector('.status-select').value = newStatus;
-    const statusLabel = taskCard.querySelector('small');
-    if (statusLabel) {
-        statusLabel.textContent = `Stato: ${newStatus.charAt(0).toUpperCase() + newStatus.slice(1)}`; // "Da fare", "In corso", ecc.
-    }
-
-    // Sposta la card nella colonna corrispondente
     const newColumn = document.getElementById(newStatus);
     if (newColumn) {
         newColumn.querySelector('.task-container').appendChild(taskCard);
     }
-
-    taskCard.setAttribute('data-status', newStatus);  // Aggiungi l'attributo data-status per tracciare lo stato
+    taskCard.setAttribute('data-status', newStatus);
 }
 
 // Funzione per cancellare un'attività
@@ -119,17 +97,14 @@ function deleteTask(taskCard) {
 
 // Funzione di apertura modale per aggiungere attività
 window.onload = () => {
-    setDate();  // Imposta la data corrente
+    setDate();
 
-    // Apre la modale quando clicchi su "Aggiungi Attività"
     const addTaskBtn = document.getElementById('addTaskBtn');
     addTaskBtn.addEventListener('click', openModal);
 
-    // Chiude la modale quando clicchi su "X"
     const closeBtn = document.getElementById('closeBtn');
     closeBtn.addEventListener('click', closeModal);
 
-    // Aggiungi l'attività quando l'utente clicca su "Aggiungi" nel form
     const taskForm = document.getElementById('taskForm');
     taskForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -138,7 +113,8 @@ window.onload = () => {
         const description = document.getElementById('description').value;
         const deadline = document.getElementById('deadline').value;
         const priority = document.getElementById('priority').value;
+        const status = document.getElementById('status').value;
 
-        addTask(title, description, deadline, priority); // Aggiungi l'attività alla lista
+        addTask(title, description, deadline, priority, status);
     });
 };
