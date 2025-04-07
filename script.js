@@ -41,7 +41,7 @@ function renderTask(task) {
     taskCard.setAttribute('draggable', 'true');  // Imposta l'attività come trascinabile
     taskCard.innerHTML = `
         <p><strong>${task.title}</strong></p>
-        <p>${task.description}</p>
+        <p>Descrizione: ${task.description}</p>
         <p><small>Scadenza: ${task.deadline}</small></p>
         <p><small>Priorità: ${task.priority}</small></p>
         <div>
@@ -100,10 +100,10 @@ window.onload = () => {
 
     const addTaskBtn = document.getElementById('addTaskBtn');
     addTaskBtn.addEventListener('click', () => {
-        const title = prompt("Inserisci il titolo dell'attività:");
-        const description = prompt("Inserisci la descrizione dell'attività:");
-        const deadline = prompt("Inserisci la scadenza dell'attività:");
-        const priority = prompt("Inserisci la priorità (bassa, media, alta):");
+        const title = document.getElementById('title').value;
+        const description = document.getElementById('description').value;
+        const deadline = document.getElementById('deadline').value;
+        const priority = document.getElementById('priority').value;
 
         addTask(title, description, deadline, priority); // Aggiungi l'attività alla lista
     });
