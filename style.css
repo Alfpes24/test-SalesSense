@@ -14,10 +14,9 @@ body {
     line-height: 30px;
     color: var(--fontColor);
     background-color: var(--greyColor);
-    overflow-x: hidden; /* Evita lo scrolling orizzontale */
+    overflow-x: hidden;
 }
 
-/* Impostazione variabili colore */
 :root {
     --colorMain: #f23178;
     --colorMain2: #a0ce4e;
@@ -28,73 +27,13 @@ body {
     --darkColor: #191f28;
     --fontColor: #7f7f7f;
     --fontColorLight: #a4a9b9;
-    --colorMainRGB: 242, 49, 120;
-    --colorMain2RGB: 160, 206, 78;
-    --colorMain3RGB: 68, 176, 205;
-    --colorMain4RGB: 241, 137, 76;
-    --darkgreyColorRGB: 31, 39, 50;
-    --greyColorRGB: 244, 244, 245;
-    --darkColorRGB: 25, 31, 40;
-    --colorMainLighter10: #f56197;
-    --colorMainLighter30: #fbc1d6;
-    --darkColorDarken2: #151a22;
-    --greyColorDarken1: #f1f1f3;
-}
-
-/* Impostazione del font e della dimensione */
-html {
-    font-size: 10px;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
-}
-
-/* Applicazione dei font generali */
-h1, h2, h3 {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    color: var(--darkColor);
-}
-
-header {
-    text-align: center;
-    margin-bottom: 40px;
 }
 
 h1 {
     font-size: 3rem;
-    margin-bottom: 10px;
+    color: var(--darkColor);
 }
 
-.date-time {
-    font-size: 1.5rem;
-    color: var(--fontColorLight);
-}
-
-/* Modale per aggiungere attività */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding-top: 60px;
-    overflow-y: auto;
-}
-
-.modal-content {
-    background-color: #fff;
-    margin: 10% auto;
-    padding: 40px;
-    border-radius: 10px;
-    width: 80%;
-    max-width: 600px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-/* Design dei pulsanti */
 button {
     background-color: var(--colorMain);
     color: white;
@@ -102,21 +41,17 @@ button {
     padding: 15px 30px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 1.1rem;
-    transition: background-color 0.3s ease;
 }
 
 button:hover {
     background-color: var(--colorMainLighter10);
 }
 
-/* Kanban Board */
 .kanban-board {
     display: flex;
     gap: 30px;
     flex-wrap: wrap;
     justify-content: center;
-    margin-bottom: 30px;
 }
 
 .kanban-column {
@@ -125,57 +60,19 @@ button:hover {
     width: 280px;
     padding: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
 }
 
-.kanban-column h2 {
-    text-align: center;
-    color: var(--darkColor);
-    font-size: 1.6rem;
-    margin-bottom: 15px;
-}
-
-.task-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-/* Task Card */
 .task-card {
     background-color: var(--greyColor);
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    color: var(--darkColor);
+    transition: background-color 0.3s ease;
 }
 
 .task-card:hover {
-    transform: scale(1.05);
     background-color: var(--greyColorDarken1);
-}
-
-.task-card.to-do {
-    background-color: var(--greyColor); /* Grigio per "Da fare" */
-}
-
-.task-card.in-progress {
-    background-color: var(--colorMain); /* Giallo per "In corso" */
-}
-
-.task-card.waiting {
-    background-color: var(--colorMain4); /* Arancione per "In attesa" */
-}
-
-.task-card.follow-up {
-    background-color: var(--colorMain3); /* Viola per "Da seguire" */
-}
-
-.task-card.completed {
-    background-color: var(--colorMain2); /* Verde per "Completato" */
 }
 
 /* Responsività per dispositivi mobili */
@@ -187,11 +84,5 @@ button:hover {
 
     .kanban-column {
         width: 90%;
-        margin-bottom: 20px;
-    }
-
-    button#addTaskBtn {
-        width: 100%;
-        padding: 20px;
     }
 }
