@@ -1,120 +1,104 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kanban Dashboard</title>
+    <title>Dashboard Kanban</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <div class="root">
-        <!-- Header Section -->
+    <div class="container">
+
+        <!-- Header -->
         <header class="header">
-            <div class="header-text">
-                <h1>Compare and shop the Top10 best services & products for you</h1>
-            </div>
+            <h1>Dashboard Kanban</h1>
+            <p>Martedì, 7 Aprile 2025</p>
         </header>
 
-        <!-- Categories Section -->
-        <div class="categories">
-            <div class="category">
-                <img src="https://example.com/icons/lifestyle.png" alt="Lifestyle Icon">
-                <span>Lifestyle</span>
-            </div>
-            <div class="category">
-                <img src="https://example.com/icons/health.png" alt="Health & Wellness Icon">
-                <span>Health & Wellness</span>
-            </div>
-            <div class="category">
-                <img src="https://example.com/icons/home.png" alt="Home Icon">
-                <span>Home</span>
-            </div>
-            <div class="category">
-                <img src="https://example.com/icons/business.png" alt="Business Icon">
-                <span>Business</span>
-            </div>
-            <div class="category">
-                <img src="https://example.com/icons/security.png" alt="Security Icon">
-                <span>Security</span>
-            </div>
+        <!-- Pulsante Aggiungi Attività -->
+        <div class="add-task-btn-container">
+            <button id="addTaskBtn">➕ Aggiungi Attività</button>
         </div>
 
         <!-- Kanban Board -->
         <div class="kanban-board">
+
             <div class="kanban-column" id="to-do">
-                <h2>Da fare</h2>
+                <h2>📋 Da fare</h2>
                 <div class="task-container"></div>
             </div>
+
             <div class="kanban-column" id="in-progress">
-                <h2>In corso</h2>
+                <h2>🔄 In corso</h2>
                 <div class="task-container"></div>
             </div>
+
             <div class="kanban-column" id="waiting">
-                <h2>In attesa</h2>
+                <h2>⏳ In attesa</h2>
                 <div class="task-container"></div>
             </div>
+
             <div class="kanban-column" id="follow-up">
-                <h2>Da seguire</h2>
+                <h2>🚩 Da seguire</h2>
                 <div class="task-container"></div>
             </div>
+
             <div class="kanban-column" id="completed">
-                <h2>Completato</h2>
+                <h2>✅ Completato</h2>
                 <div class="task-container"></div>
             </div>
+
         </div>
 
-        <!-- Modale per Aggiungere Attività -->
+        <!-- Modale Popup (nascosto di default) -->
         <div id="taskModal" class="modal">
             <div class="modal-content">
-                <span class="close-btn" id="closeBtn">&times;</span>
-                <h2>Aggiungi Nuova Attività</h2>
+                <span class="close-btn">✖️</span>
+                <h3>✏️ Aggiungi Nuova Attività</h3>
                 <form id="taskForm">
-                    <div>
-                        <label for="title">Titolo Attività:</label>
-                        <input type="text" id="title" placeholder="Inserisci il titolo dell'attività" required>
+                    <label>📌 Titolo Attività</label>
+                    <input type="text" id="taskTitle" required>
+
+                    <label>📂 Categoria</label>
+                    <select id="taskCategory">
+                        <option>Call</option>
+                        <option>Evento</option>
+                        <option>Formazione</option>
+                        <option>Sviluppo</option>
+                        <option>Lead Generation</option>
+                        <option>Varie</option>
+                    </select>
+
+                    <label>📅 Data Scadenza</label>
+                    <input type="date" id="taskDeadline">
+
+                    <label>🎯 Priorità</label>
+                    <select id="taskPriority">
+                        <option>Alta</option>
+                        <option>Media</option>
+                        <option>Bassa</option>
+                    </select>
+
+                    <label>📊 Stato</label>
+                    <select id="taskStatus">
+                        <option value="to-do">Da fare</option>
+                        <option value="in-progress">In corso</option>
+                        <option value="waiting">In attesa</option>
+                        <option value="follow-up">Da seguire</option>
+                        <option value="completed">Completato</option>
+                    </select>
+
+                    <div class="modal-buttons">
+                        <button type="button" class="cancel-btn">Annulla</button>
+                        <button type="submit" class="save-btn">💾 Salva Attività</button>
                     </div>
-                    <div>
-                        <label for="description">Descrizione Attività:</label>
-                        <select id="description" required>
-                            <option value="Call">Call</option>
-                            <option value="Evento">Evento</option>
-                            <option value="Formazione">Formazione</option>
-                            <option value="Sviluppo">Sviluppo</option>
-                            <option value="Lead Generation">Lead Generation</option>
-                            <option value="Varie">Varie</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="deadline">Scadenza:</label>
-                        <input type="date" id="deadline" required>
-                    </div>
-                    <div>
-                        <label for="priority">Priorità:</label>
-                        <select id="priority" required>
-                            <option value="alta">Alta</option>
-                            <option value="media">Media</option>
-                            <option value="bassa">Bassa</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="status">Stato Attività:</label>
-                        <select id="status" required>
-                            <option value="to-do">Da fare</option>
-                            <option value="in-progress">In corso</option>
-                            <option value="waiting">In attesa</option>
-                            <option value="follow-up">Da seguire</option>
-                            <option value="completed">Completato</option>
-                        </select>
-                    </div>
-                    <button type="submit">Aggiungi</button>
                 </form>
             </div>
         </div>
+
     </div>
 
     <script src="script.js"></script>
 </body>
-
 </html>
