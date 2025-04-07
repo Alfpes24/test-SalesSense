@@ -112,12 +112,11 @@ function enableDragAndDrop() {
     const taskCards = document.querySelectorAll('.task-card');
     const columns = document.querySelectorAll('.kanban-column');
 
-    // Aggiungere il dragstart per ogni card
     taskCards.forEach(card => {
         card.addEventListener('dragstart', (e) => {
             const taskId = card.querySelector('strong').textContent;
             e.dataTransfer.setData('task-id', taskId);  
-            console.log(`Dragging task with ID: ${taskId}`); 
+            console.log(`Dragging task with ID: ${taskId}`);  
             card.classList.add('dragging');  
         });
 
@@ -126,7 +125,6 @@ function enableDragAndDrop() {
         });
     });
 
-    // Aggiungere il dragover e il drop per ogni colonna
     columns.forEach(col => {
         col.addEventListener('dragover', (e) => {
             e.preventDefault();  
@@ -137,18 +135,20 @@ function enableDragAndDrop() {
             const taskId = e.dataTransfer.getData('task-id');  
             console.log(`Dropped task with ID: ${taskId} into column: ${col.id}`);  
 
-            // Trova la card con l'ID specificato
             const droppedCard = [...document.querySelectorAll('.task-card')]
                 .find(card => card.querySelector('strong').textContent === taskId);
 
             if (droppedCard) {
-                const newStatus = col.id;  // Ottieni il nuovo stato della colonna
-                droppedCard.querySelector('small').textContent = `Stato: ${newStatus}`;  // Aggiorna il contenuto dello stato
-                droppedCard.setAttribute('data-status', newStatus);  // Aggiungi o aggiorna l'attributo data-status
-                
-                col.querySelector('.task-container').appendChild(droppedCard);  // Sposta la card nella nuova colonna
-                updateTaskStatus(taskId, newStatus);  // Funzione per aggiornare lo stato
-                sortTasksByPriority();  // Riordina le attività per priorità
+                const newStatus = col.id;  
+                droppedCard.querySelector('small').textContent = `Stato: ${newStatus}`;  
+                droppedCard.setAttribute('data-status', newStatus); 
+
+                // Verifica se il nuovo stato è applicato
+                console.log(`Updated status for task ${taskId} to: ${newStatus}`);
+
+                col.querySelector('.task-container').appendChild(droppedCard);  
+                updateTaskStatus(taskId, newStatus);  
+                sortTasksByPriority();  
             }
         });
     });
@@ -161,9 +161,11 @@ function updateTaskStatus(taskId, newStatus) {
 
     if (task) {
         task.querySelector('small').textContent = `Stato: ${newStatus}`;  
-        task.setAttribute('data-status', newStatus);  // Aggiungi un nuovo attributo per tracciare lo stato
+        task.setAttribute('data-status', newStatus); 
+        console.log(`Task status updated in DOM for task ${taskId}: ${newStatus}`);
     }
 }
+
 
 
 
