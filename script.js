@@ -11,6 +11,18 @@ function setDate() {
     dateElement.textContent = dateString;
 }
 
+// Funzione per aprire la modale
+function openModal() {
+    const modal = document.getElementById('taskModal');
+    modal.style.display = 'block';
+}
+
+// Funzione per chiudere la modale
+function closeModal() {
+    const modal = document.getElementById('taskModal');
+    modal.style.display = 'none';
+}
+
 // Funzione per aggiungere una nuova attività
 function addTask(title, description, deadline, priority) {
     console.log("Funzione addTask chiamata");
@@ -30,6 +42,7 @@ function addTask(title, description, deadline, priority) {
     };
 
     renderTask(task);  // Passa l'attività alla funzione renderTask
+    closeModal(); // Chiude la modale dopo che l'attività è stata aggiunta
 }
 
 // Funzione per visualizzare l'attività nella colonna corretta
@@ -95,11 +108,23 @@ function deleteTask(taskCard) {
     taskCard.remove();
 }
 
+// Funzione di apertura modale per aggiungere attività
 window.onload = () => {
     setDate();  // Imposta la data corrente
 
+    // Apre la modale quando clicchi su "Aggiungi Attività"
     const addTaskBtn = document.getElementById('addTaskBtn');
-    addTaskBtn.addEventListener('click', () => {
+    addTaskBtn.addEventListener('click', openModal);
+
+    // Chiude la modale quando clicchi su "X"
+    const closeBtn = document.getElementById('closeBtn');
+    closeBtn.addEventListener('click', closeModal);
+
+    // Aggiungi l'attività quando l'utente clicca su "Aggiungi" nel form
+    const taskForm = document.getElementById('taskForm');
+    taskForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
         const title = document.getElementById('title').value;
         const description = document.getElementById('description').value;
         const deadline = document.getElementById('deadline').value;
