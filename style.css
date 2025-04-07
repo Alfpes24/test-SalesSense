@@ -129,11 +129,31 @@ button[type="submit"]:hover {
 
 /* Stile delle attività */
 .task-card {
-    background-color: #e0e0e0;
     padding: 15px;
     border-radius: 5px;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.task-card.to-do {
+    background-color: #e0e0e0; /* Grigio per "Da fare" */
+}
+
+.task-card.in-progress {
+    background-color: #ffeb3b; /* Giallo per "In corso" */
+}
+
+.task-card.waiting {
+    background-color: #ff9800; /* Arancione per "In attesa" */
+}
+
+.task-card.follow-up {
+    background-color: #9c27b0; /* Viola per "Da seguire" */
+}
+
+.task-card.completed {
+    background-color: #4caf50; /* Verde per "Completato" */
 }
 
 .task-card:hover {
