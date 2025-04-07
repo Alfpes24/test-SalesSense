@@ -18,8 +18,45 @@
         </header>
 
         <div class="add-task">
-            <!-- Pulsante per aggiungere attività -->
             <button id="addTaskBtn">Aggiungi Attività</button>
+        </div>
+
+        <!-- Modale per aggiungere attività -->
+        <div id="taskModal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" id="closeBtn">&times;</span>
+                <h2>Aggiungi Nuova Attività</h2>
+                <form id="taskForm">
+                    <div>
+                        <label for="title">Titolo Attività:</label>
+                        <input type="text" id="title" placeholder="Inserisci il titolo dell'attività" required>
+                    </div>
+                    <div>
+                        <label for="description">Descrizione Attività:</label>
+                        <select id="description" required>
+                            <option value="Call">Call</option>
+                            <option value="Evento">Evento</option>
+                            <option value="Formazione">Formazione</option>
+                            <option value="Sviluppo">Sviluppo</option>
+                            <option value="Lead Generation">Lead Generation</option>
+                            <option value="Varie">Varie</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="deadline">Scadenza:</label>
+                        <input type="date" id="deadline" required>
+                    </div>
+                    <div>
+                        <label for="priority">Priorità:</label>
+                        <select id="priority" required>
+                            <option value="alta">Alta</option>
+                            <option value="media">Media</option>
+                            <option value="bassa">Bassa</option>
+                        </select>
+                    </div>
+                    <button type="submit">Aggiungi</button>
+                </form>
+            </div>
         </div>
 
         <div class="kanban-board">
