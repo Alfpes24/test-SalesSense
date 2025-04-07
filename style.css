@@ -34,20 +34,35 @@ h1 {
     font-size: 3rem;
     color: var(--darkColor);
     margin-bottom: 10px;
+    text-align: center;
 }
 
-button {
+.date-time {
+    font-size: 1.5rem;
+    color: var(--fontColorLight);
+    text-align: center;
+    margin-top: 5px;
+}
+
+/* Pulsante Aggiungi Attività */
+.add-task {
+    text-align: center;
+    margin-top: 30px;
+}
+
+button#addTaskBtn {
+    padding: 15px 30px;
+    font-size: 1.1rem;
     background-color: var(--colorMain);
     color: white;
     border: none;
-    padding: 15px 30px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 1.1rem;
     transition: background-color 0.3s ease;
+    display: inline-block;  /* Garantisce che il pulsante si comporti come un elemento inline */
 }
 
-button:hover {
+button#addTaskBtn:hover {
     background-color: var(--colorMainLighter10);
 }
 
@@ -94,7 +109,7 @@ button:hover {
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: center;
     margin-top: 30px;
 }
 
