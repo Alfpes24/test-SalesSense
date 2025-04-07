@@ -26,80 +26,68 @@ function addTask(title, description, deadline, priority) {
         description: description,
         deadline: deadline,
         priority: priority,
-        status: 'to-do'
+        status: 'to-do'  // Impostiamo lo stato di default come "Da fare"
     };
 
-    renderTask(task);
+    renderTask(task);  // Passa l'attività alla funzione renderTask
 }
 
-// Funzione per visualizzare l'attività nella colonna "Da fare"
+// Funzione per visualizzare l'attività nella colonna corretta
 function renderTask(task) {
-    console.log("Rendering activity:", task);
+    console.log("Rendering activity:", task);  
 
     const taskCard = document.createElement('div');
     taskCard.classList.add('task-card');
-    taskCard.setAttribute('draggable', 'true'); 
+    taskCard.setAttribute('draggable', 'true');  // Imposta l'attività come trascinabile
     taskCard.innerHTML = `
         <p><strong>${task.title}</strong></p>
         <p>${task.description}</p>
         <p><small>Scadenza: ${task.deadline}</small></p>
         <p><small>Priorità: ${task.priority}</small></p>
-        <button class="edit-btn">Modifica</button>
+        <div>
+            <label for="status-select">Sposta a:</label>
+            <select class="status-select">
+                <option value="to-do" ${task.status === 'to-do' ? 'selected' : ''}>Da fare</option>
+                <option value="in-progress" ${task.status === 'in-progress' ? 'selected' : ''}>In corso</option>
+                <option value="completed" ${task.status === 'completed' ? 'selected' : ''}>Completato</option>
+                <option value="waiting" ${task.status === 'waiting' ? 'selected' : ''}>In attesa</option>
+            </select>
+        </div>
         <button class="delete-btn">Cancella</button>
     `;
 
-    taskCard.querySelector('.edit-btn').addEventListener('click', () => editTask(taskCard, task));
+    taskCard.querySelector('.status-select').addEventListener('change', (e) => {
+        const newStatus = e.target.value;
+        updateTaskStatus(taskCard, newStatus);
+    });
+
     taskCard.querySelector('.delete-btn').addEventListener('click', () => deleteTask(taskCard));
 
+    // Seleziona la colonna in base allo stato e aggiungi la card
     const column = document.getElementById(task.status);
     if (column) {
         column.querySelector('.task-container').appendChild(taskCard);
-        sortTasksByPriority();  
     } else {
         console.log("Colonna non trovata:", task.status);
     }
 }
 
-// Funzione per ordinare le attività in base alla priorità
-function sortTasksByPriority() {
-    const tasks = document.querySelectorAll('.task-card');
-    const tasksArray = Array.from(tasks);
-    
-    tasksArray.sort((a, b) => {
-        const priorityA = a.querySelector('small').textContent.toLowerCase();
-        const priorityB = b.querySelector('small').textContent.toLowerCase();
-        
-        const priorityOrder = { 'alta': 1, 'media': 2, 'bassa': 3 };
+// Funzione per aggiornare lo stato dell'attività
+function updateTaskStatus(taskCard, newStatus) {
+    // Aggiorna lo stato dell'attività nel DOM
+    taskCard.querySelector('.status-select').value = newStatus;
+    const statusLabel = taskCard.querySelector('small');
+    if (statusLabel) {
+        statusLabel.textContent = `Stato: ${newStatus.charAt(0).toUpperCase() + newStatus.slice(1)}`; // "Da fare", "In corso", ecc.
+    }
 
-        return priorityOrder[priorityA] - priorityOrder[priorityB];
-    });
+    // Sposta la card nella colonna corrispondente
+    const newColumn = document.getElementById(newStatus);
+    if (newColumn) {
+        newColumn.querySelector('.task-container').appendChild(taskCard);
+    }
 
-    const taskContainer = document.querySelector('#to-do .task-container');
-    tasksArray.forEach(task => taskContainer.appendChild(task));
-}
-
-// Funzione per modificare un'attività
-function editTask(taskCard, task) {
-    const newTitle = prompt("Modifica il titolo dell'attività", task.title);
-    const newDescription = prompt("Modifica la descrizione", task.description);
-    const newDeadline = prompt("Modifica la scadenza", task.deadline);
-    const newPriority = prompt("Modifica la priorità", task.priority);
-
-    if (newTitle) task.title = newTitle;
-    if (newDescription) task.description = newDescription;
-    if (newDeadline) task.deadline = newDeadline;
-    if (newPriority) task.priority = newPriority;
-
-    taskCard.innerHTML = `
-        <p><strong>${task.title}</strong></p>
-        <p>${task.description}</p>
-        <p><small>Scadenza: ${task.deadline}</small></p>
-        <p><small>Priorità: ${task.priority}</small></p>
-        <button class="edit-btn">Modifica</button>
-        <button class="delete-btn">Cancella</button>
-    `;
-    taskCard.querySelector('.edit-btn').addEventListener('click', () => editTask(taskCard, task));
-    taskCard.querySelector('.delete-btn').addEventListener('click', () => deleteTask(taskCard));
+    taskCard.setAttribute('data-status', newStatus);  // Aggiungi l'attributo data-status per tracciare lo stato
 }
 
 // Funzione per cancellare un'attività
@@ -107,71 +95,8 @@ function deleteTask(taskCard) {
     taskCard.remove();
 }
 
-// Funzione per abilitare il drag-and-drop
-function enableDragAndDrop() {
-    const taskCards = document.querySelectorAll('.task-card');
-    const columns = document.querySelectorAll('.kanban-column');
-
-    taskCards.forEach(card => {
-        card.addEventListener('dragstart', (e) => {
-            const taskId = card.querySelector('strong').textContent;
-            e.dataTransfer.setData('task-id', taskId);  
-            console.log(`Dragging task with ID: ${taskId}`);  
-            card.classList.add('dragging');  
-        });
-
-        card.addEventListener('dragend', () => {
-            card.classList.remove('dragging');  
-        });
-    });
-
-    columns.forEach(col => {
-        col.addEventListener('dragover', (e) => {
-            e.preventDefault();  
-        });
-
-        col.addEventListener('drop', (e) => {
-            e.preventDefault();
-            const taskId = e.dataTransfer.getData('task-id');  
-            console.log(`Dropped task with ID: ${taskId} into column: ${col.id}`);  
-
-            const droppedCard = [...document.querySelectorAll('.task-card')]
-                .find(card => card.querySelector('strong').textContent === taskId);
-
-            if (droppedCard) {
-                const newStatus = col.id;  // Ottieni il nuovo stato della colonna
-                droppedCard.querySelector('small').textContent = `Stato: ${newStatus}`;  // Aggiorna lo stato visibile
-                droppedCard.setAttribute('data-status', newStatus);  // Aggiungi o aggiorna l'attributo data-status
-                
-                // Verifica se il nuovo stato è applicato
-                console.log(`Updated status for task ${taskId} to: ${newStatus}`);
-
-                col.querySelector('.task-container').appendChild(droppedCard);  // Sposta la card nella colonna
-                updateTaskStatus(taskId, newStatus);  
-                sortTasksByPriority();  
-            }
-        });
-    });
-}
-
-// Funzione per aggiornare lo stato dell'attività quando viene spostata
-function updateTaskStatus(taskId, newStatus) {
-    const task = [...document.querySelectorAll('.task-card')]
-        .find(card => card.querySelector('strong').textContent === taskId);
-
-    if (task) {
-        const statusElement = task.querySelector('small');
-        if (statusElement) {
-            statusElement.textContent = `Stato: ${newStatus}`;  
-            task.setAttribute('data-status', newStatus); 
-            console.log(`Task status updated in DOM for task ${taskId}: ${newStatus}`);
-        }
-    }
-}
-
-
 window.onload = () => {
-    setDate();
+    setDate();  // Imposta la data corrente
 
     const addTaskBtn = document.getElementById('addTaskBtn');
     addTaskBtn.addEventListener('click', () => {
@@ -179,9 +104,7 @@ window.onload = () => {
         const description = prompt("Inserisci la descrizione dell'attività:");
         const deadline = prompt("Inserisci la scadenza dell'attività:");
         const priority = prompt("Inserisci la priorità (bassa, media, alta):");
-        
-        addTask(title, description, deadline, priority); 
-    });
 
-    enableDragAndDrop();  
+        addTask(title, description, deadline, priority); // Aggiungi l'attività alla lista
+    });
 };
