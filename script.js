@@ -139,14 +139,17 @@ function enableDragAndDrop() {
                 .find(card => card.querySelector('strong').textContent === taskId);
 
             if (droppedCard) {
-                const newStatus = col.id;  // Nuovo stato in base alla colonna
-                droppedCard.querySelector('small').textContent = `Stato: ${newStatus}`;  // Aggiorna lo stato visibile
-                droppedCard.setAttribute('data-status', newStatus);  // Aggiungi stato nell'attributo data-status
+                const newStatus = col.id;  
+                droppedCard.querySelector('small').textContent = `Stato: ${newStatus}`;  
+                droppedCard.setAttribute('data-status', newStatus);  
 
-                // Sposta la card nella colonna
+                // Aggiorna visivamente lo stato
+                const statusElement = droppedCard.querySelector('small');
+                if (statusElement) {
+                    statusElement.textContent = `Stato: ${newStatus}`;
+                }
+
                 col.querySelector('.task-container').appendChild(droppedCard);  
-
-                // Aggiorna lo stato interno
                 updateTaskStatus(taskId, newStatus);  
                 sortTasksByPriority();  
             }
@@ -160,12 +163,14 @@ function updateTaskStatus(taskId, newStatus) {
         .find(card => card.querySelector('strong').textContent === taskId);
 
     if (task) {
-        task.querySelector('small').textContent = `Stato: ${newStatus}`;  
-        task.setAttribute('data-status', newStatus); 
+        const statusElement = task.querySelector('small');
+        if (statusElement) {
+            statusElement.textContent = `Stato: ${newStatus}`;  
+            task.setAttribute('data-status', newStatus);  // Aggiunge o aggiorna l'attributo data-status
+        }
         console.log(`Task status updated in DOM for task ${taskId}: ${newStatus}`);
     }
 }
-
 
 
 
