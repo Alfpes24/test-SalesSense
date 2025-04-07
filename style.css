@@ -1,199 +1,222 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Kanban</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #37474F;
-            --background-color: #f4f6f8;
-            --card-background: #ffffff;
-            --shadow-color: rgba(0, 0, 0, 0.1);
-            --accent-color: #4caf50;
-        }
+/* ======= RESET & BASE ======= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--background-color);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--primary-color);
-        }
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
 
-        .container {
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 20px;
-        }
+.container {
+  width: 100%;
+  max-width: 1200px;
+}
 
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
 
-        .header h1 {
-            margin: 0;
-            font-weight: 600;
-        }
+/* ======= HEADER ======= */
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+}
 
-        .add-task-btn-container {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+.header h1 {
+  font-size: 2.5rem;
+  color: #2c2c2c;
+}
 
-        #addTaskBtn {
-            background-color: var(--accent-color);
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
+.header p {
+  font-size: 1.2rem;
+  color: #999;
+}
 
-        .kanban-board {
-            display: flex;
-            gap: 15px;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
 
-        .kanban-column {
-            flex: 1;
-            background-color: var(--card-background);
-            border-radius: 8px;
-            box-shadow: 0 4px 8px var(--shadow-color);
-            padding: 15px;
-            min-width: 220px;
-        }
+/* ======= ADD TASK BUTTON ======= */
+.add-task-btn-container {
+  text-align: center;
+  margin-bottom: 40px;
+}
 
-        .kanban-column h2 {
-            margin-top: 0;
-            font-size: 18px;
-        }
+#addTaskBtn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
-        .task-container {
-            min-height: 100px;
-        }
+#addTaskBtn:hover {
+  background-color: #45a049;
+}
 
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            justify-content: center;
-            align-items: center;
-        }
 
-        .modal-content {
-            background-color: var(--card-background);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px var(--shadow-color);
-            position: relative;
-            width: 90%;
-            max-width: 500px;
-        }
+/* ======= KANBAN BOARD ======= */
+.kanban-board {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
 
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            cursor: pointer;
-        }
+.kanban-column {
+  background-color: #fff;
+  flex: 1;
+  min-width: 220px;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
 
-        form label {
-            display: block;
-            margin-top: 10px;
-        }
+.kanban-column h2 {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
 
-        form input, form select {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            box-sizing: border-box;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-        }
+.task-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
-        .modal-buttons {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 20px;
-        }
+.task-card {
+  background-color: #ffffff;
+  border-left: 6px solid #ccc;
+  padding: 12px 16px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 
-        .cancel-btn, .save-btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+.task-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
 
-        .cancel-btn {
-            background-color: #ccc;
-        }
+.task-card.to-do    { border-color: #90a4ae; background-color: #e8eaf6; }
+.task-card.in-progress { border-color: #0288d1; background-color: #b3e5fc; }
+.task-card.waiting  { border-color: #fbc02d; background-color: #fff9c4; }
+.task-card.follow-up { border-color: #8e24aa; background-color: #e1bee7; }
+.task-card.completed { border-color: #388e3c; background-color: #c8e6c9; }
 
-        .save-btn {
-            background-color: var(--accent-color);
-            color: white;
-        }
+.task-card p, .task-card strong {
+  margin-bottom: 4px;
+  color: #333;
+}
 
-    </style>
-</head>
-<body>
-    <div class="container">
+/* ======= MODAL (POPUP) ======= */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
+}
 
-        <!-- Header -->
-        <header class="header">
-            <h1>Dashboard Kanban</h1>
-            <p>Martedì, 7 Aprile 2025</p>
-        </header>
+.modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  animation: slideUp 0.4s ease;
+  position: relative;
+}
 
-        <!-- Pulsante Aggiungi Attività -->
-        <div class="add-task-btn-container">
-            <button id="addTaskBtn">➕ Aggiungi Attività</button>
-        </div>
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #999;
+}
 
-        <!-- Kanban Board -->
-        <div class="kanban-board">
+.modal-content h3 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #2c2c2c;
+}
 
-            <div class="kanban-column" id="to-do">
-                <h2>📋 Da fare</h2>
-                <div class="task-container"></div>
-            </div>
+.modal-content label {
+  display: block;
+  margin-top: 10px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
 
-            <div class="kanban-column" id="in-progress">
-                <h2>🔄 In corso</h2>
-                <div class="task-container"></div>
-            </div>
+.modal-content input,
+.modal-content select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
 
-            <div class="kanban-column" id="waiting">
-                <h2>⏳ In attesa</h2>
-                <div class="task-container"></div>
-            </div>
+.modal-buttons {
+  text-align: right;
+  margin-top: 20px;
+}
 
-            <div class="kanban-column" id="follow-up">
-                <h2>🚩 Da seguire</h2>
-                <div class="task-container"></div>
-            </div>
+.cancel-btn {
+  background: #ccc;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  margin-right: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
 
-            <div class="kanban-column" id="completed">
-                <h2>✅ Completato</h2>
-                <div class="task-container"></div>
-            </div>
+.save-btn {
+  background: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
 
-        </div>
+/* ======= ANIMATIONS ======= */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
-    </div>
-</body>
-</html>
+@keyframes slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ======= RESPONSIVE ======= */
+@media (max-width: 768px) {
+  .kanban-board {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .kanban-column {
+    width: 100%;
+  }
+}
