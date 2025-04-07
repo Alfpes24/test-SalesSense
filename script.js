@@ -50,7 +50,7 @@ function renderTask(task) {
     console.log("Rendering activity:", task);  
 
     const taskCard = document.createElement('div');
-    taskCard.classList.add('task-card');
+    taskCard.classList.add('task-card', task.status);
     taskCard.setAttribute('draggable', 'true');  // Imposta l'attività come trascinabile
     taskCard.innerHTML = `
         <p><strong>${task.title}</strong></p>
@@ -87,6 +87,12 @@ function renderTask(task) {
 
 // Funzione per aggiornare lo stato dell'attività
 function updateTaskStatus(taskCard, newStatus) {
+    // Rimuove tutte le classi di stato precedenti
+    taskCard.classList.remove('to-do', 'in-progress', 'waiting', 'follow-up', 'completed');
+    
+    // Aggiungi la classe corrispondente al nuovo stato
+    taskCard.classList.add(newStatus);
+
     // Aggiorna lo stato dell'attività nel DOM
     taskCard.querySelector('.status-select').value = newStatus;
     const statusLabel = taskCard.querySelector('small');
