@@ -47,10 +47,10 @@ function addTask(title, description, deadline, priority) {
 
 // Funzione per visualizzare l'attività nella colonna corretta
 function renderTask(task) {
-    console.log("Rendering activity:", task);  
+    console.log("Rendering activity:", task);
 
     const taskCard = document.createElement('div');
-    taskCard.classList.add('task-card', task.status);
+    taskCard.classList.add('task-card', task.status);  // Imposta la classe con il colore
     taskCard.setAttribute('draggable', 'true');  // Imposta l'attività come trascinabile
     taskCard.innerHTML = `
         <p><strong>${task.title}</strong></p>
@@ -64,16 +64,19 @@ function renderTask(task) {
                 <option value="in-progress" ${task.status === 'in-progress' ? 'selected' : ''}>In corso</option>
                 <option value="completed" ${task.status === 'completed' ? 'selected' : ''}>Completato</option>
                 <option value="waiting" ${task.status === 'waiting' ? 'selected' : ''}>In attesa</option>
+                <option value="follow-up" ${task.status === 'follow-up' ? 'selected' : ''}>Da seguire</option>
             </select>
         </div>
         <button class="delete-btn">Cancella</button>
     `;
 
+    // Gestisce il cambiamento dello stato tramite il menu a tendina
     taskCard.querySelector('.status-select').addEventListener('change', (e) => {
         const newStatus = e.target.value;
         updateTaskStatus(taskCard, newStatus);
     });
 
+    // Gestisce la cancellazione della task
     taskCard.querySelector('.delete-btn').addEventListener('click', () => deleteTask(taskCard));
 
     // Seleziona la colonna in base allo stato e aggiungi la card
