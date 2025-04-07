@@ -139,17 +139,14 @@ function enableDragAndDrop() {
                 .find(card => card.querySelector('strong').textContent === taskId);
 
             if (droppedCard) {
-                const newStatus = col.id;  
-                droppedCard.querySelector('small').textContent = `Stato: ${newStatus}`;  
-                droppedCard.setAttribute('data-status', newStatus);  
+                const newStatus = col.id;  // Ottieni il nuovo stato della colonna
+                droppedCard.querySelector('small').textContent = `Stato: ${newStatus}`;  // Aggiorna lo stato visibile
+                droppedCard.setAttribute('data-status', newStatus);  // Aggiungi o aggiorna l'attributo data-status
+                
+                // Verifica se il nuovo stato è applicato
+                console.log(`Updated status for task ${taskId} to: ${newStatus}`);
 
-                // Aggiorna visivamente lo stato
-                const statusElement = droppedCard.querySelector('small');
-                if (statusElement) {
-                    statusElement.textContent = `Stato: ${newStatus}`;
-                }
-
-                col.querySelector('.task-container').appendChild(droppedCard);  
+                col.querySelector('.task-container').appendChild(droppedCard);  // Sposta la card nella colonna
                 updateTaskStatus(taskId, newStatus);  
                 sortTasksByPriority();  
             }
@@ -166,15 +163,11 @@ function updateTaskStatus(taskId, newStatus) {
         const statusElement = task.querySelector('small');
         if (statusElement) {
             statusElement.textContent = `Stato: ${newStatus}`;  
-            task.setAttribute('data-status', newStatus);  // Aggiunge o aggiorna l'attributo data-status
+            task.setAttribute('data-status', newStatus); 
+            console.log(`Task status updated in DOM for task ${taskId}: ${newStatus}`);
         }
-        console.log(`Task status updated in DOM for task ${taskId}: ${newStatus}`);
     }
 }
-
-
-
-
 
 
 window.onload = () => {
