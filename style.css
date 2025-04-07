@@ -34,13 +34,13 @@ h1 {
     font-size: 3rem;
     color: var(--darkColor);
     margin-bottom: 10px;
-    text-align: center;
+    text-align: center; /* Titolo centrato */
 }
 
 .date-time {
     font-size: 1.5rem;
     color: var(--fontColorLight);
-    text-align: center;
+    text-align: center; /* Data centrata */
     margin-top: 5px;
 }
 
